@@ -15,7 +15,7 @@ cores.
 
 - **RV32IMAC** base, plus the **`B`** bit-manipulation set (`Zba`/`Zbb`/`Zbc`/`Zbs`)
   and **`Zcb`** code-size instructions, with `Zicsr`.
-- A **3-stage in-order pipeline** with forwarding and a load-use stall.
+- A **3-stage in-order pipeline** with full forwarding and no load-use stall.
 - A **dynamic branch predictor** — gshare direction predictor + BTB + return
   address stack.
 - Optional **M/U/N privilege**, an **8-region PMP** (with ePMP), and hardware
