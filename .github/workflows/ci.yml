@@ -23,12 +23,12 @@ jobs:
 
       # Smoke test: compile the core + SoC and run the self-checking program.
       - name: Smoke test
-        run: ./build.sh
+        run: bash build.sh
 
       # Golden co-simulation: lock-step the RTL against the RV32IM ISA model.
       - name: Golden co-simulation
-        run: ./build.sh cosim
+        run: bash build.sh cosim
 
       # RVFI (RISC-V Formal Interface) self-check.
       - name: RVFI self-check
-        run: ./build.sh rvfi
+        run: bash build.sh rvfi
