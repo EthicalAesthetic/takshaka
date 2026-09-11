@@ -15,40 +15,15 @@ cores.
 
 ## Highlights
 
-- **ISA:** RV32IMAC — base integer, `M` multiply/divide, `A` atomics,
-  and `C` compressed — plus the **`B` bit-manipulation** set
-  (`Zba`, `Zbb`, `Zbc`, `Zbs`) and **`Zcb`** code-size instructions, with the
-  `Zicsr` control-and-status extension.
-- **Microarchitecture:** 3-stage in-order pipeline
-  (**IF → EX → MEM/WB**) with a full forwarding network — load data produced in
-  the memory stage forwards to a dependent instruction with **no load-use
-  stall**; only multi-cycle operations (multiply/divide, misaligned access,
-  atomics) stall. One instruction retires per cycle in the common case.
-- **Branch prediction:** dynamic **gshare + BTB + RAS** (return-address stack)
-  front end with a halfword-granular, RVC-safe target buffer — mispredicts
-  flush and redirect, everything else flows.
-- **Privilege:** Machine mode always; the **`SECURE`** configuration adds a
-  full **M / U / N** privilege split (including `N` user-level traps).
-- **Memory protection:** optional **8-region PMP** with TOR / NA4 / NAPOT
-  matching, R/W/X permissions, locking, and **ePMP** (`mseccfg`) semantics
-  (`SECURE`).
-- **Debug triggers:** optional hardware **breakpoint / watchpoint** triggers
-  (`mcontrol6`: execute PC-match and load/store address-match) (`SECURE`).
-- **Traps & interrupts:** precise exceptions, `ECALL` / `EBREAK` / illegal-
-  instruction handling, `MRET` / `URET`, and timer / software / external
-  interrupt lines.
-- **Misaligned access:** hardware support for misaligned loads and stores
-  (handled as a two-beat memory sequence).
-- **Debug:** RISC-V External Debug — a JTAG Transport Module plus a Debug
-  Module (halt / resume, single-step, GPR & CSR access).
-- **Buses:** a minimal native memory interface, plus an **AXI4-Lite** wrapper
-  for drop-in integration into standard SoC fabrics.
-- **RTOS:** a ready-to-run **FreeRTOS** port (preemptive multitasking driven
-  by the SoC timer, with a UART console).
-- **Verification:** self-checking tests, cycle-accurate **co-simulation
-  against a golden RV32IM ISA model**, an **RVFI** (RISC-V Formal Interface)
-  port, a Debug-Module self-check, and a constrained-random test flow.
-- **Performance:** ~**3.16 CoreMark/MHz** (measured on RTL, no caches).
+- **ISA:** RV32IMAC + B (`Zba`/`bb`/`bc`/`bs`), `Zcb`, `Zicsr`
+- **Pipeline:** 3-stage in-order with full forwarding & zero load-use stalls
+- **Branch Prediction:** Dynamic gshare + BTB + RAS
+- **Privilege & Security:** M/U/N modes, 8-region PMP/ePMP, and triggers (`SECURE`)
+- **Memory & Buses:** Hardware misaligned access, native bus, and AXI4-Lite master
+- **Debug:** RISC-V external debug via JTAG (DTM + DM)
+- **Software & RTOS:** Preemptive FreeRTOS port with UART console
+- **Verification:** Golden ISA co-simulation, RVFI formal port, and self-checking tests
+- **Performance:** ~3.16 CoreMark/MHz
 
 ---
 
@@ -96,22 +71,6 @@ Linux / macOS:
 ./build.sh axi      # AXI4-Lite master BFM test
 ./build.sh rtos     # FreeRTOS preemptive multitasking demo
 ./build.sh clean
-```
-
-Windows (PowerShell):
-
-```powershell
-.\build.ps1          # compile + smoke
-.\build.ps1 cosim    # + golden co-simulation
-.\build.ps1 rvfi
-.\build.ps1 debug
-```
-
-Expected output for the default build:
-
-```
-[TB] PASS
-[cosim] MATCH — retires identical. RTL is ISA-correct.
 ```
 
 ## Configurations
