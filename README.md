@@ -47,8 +47,7 @@ takshaka/
 ├── rtos/               FreeRTOS port (kernel, BSP, demo app)
 ├── fpga/               FPGA SoC + Arty A7 / ZCU102 constraints
 ├── docs/               documentation site (MkDocs)
-├── build.sh            Linux/macOS build & test driver
-└── build.ps1           Windows (PowerShell) build & test driver
+└── build.sh            build & test driver
 ```
 
 ## Requirements
@@ -59,8 +58,6 @@ takshaka/
 - *(optional)* Vivado for the Arty A7 / ZCU102 FPGA flows
 
 ## Build & test
-
-Linux / macOS:
 
 ```bash
 ./build.sh          # compile + self-checking smoke test
