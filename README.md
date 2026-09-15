@@ -23,7 +23,7 @@ cores.
 - **Debug:** RISC-V external debug via JTAG (DTM + DM)
 - **Software & RTOS:** Preemptive FreeRTOS port with UART console
 - **Verification:** Golden ISA co-simulation, RVFI formal port, and self-checking tests
-- **Performance:** ~3.16 CoreMark/MHz
+
 
 ---
 
@@ -45,7 +45,7 @@ takshaka/
 ├── programs/           test-program builders
 ├── sw/                 assembly test programs & bring-up firmware
 ├── rtos/               FreeRTOS port (kernel, BSP, demo app)
-├── fpga/               FPGA SoC + Arty A7 / ZCU102 constraints
+├── fpga/               FPGA SoC + Arty A7
 ├── docs/               documentation site (MkDocs)
 └── build.sh            build & test driver
 ```
@@ -69,6 +69,61 @@ takshaka/
 ./build.sh rtos     # FreeRTOS preemptive multitasking demo
 ./build.sh clean
 ```
+
+## Performance & Benchmarks
+
+Takshaka has been evaluated across industry-standard embedded benchmarks in simulation and bare-metal execution on physical FPGA silicon.
+
+### CoreMark
+
+| Metric | Simulation / FPGA |
+| :--- | :--- |
+| Cycles / iteration | 341,599 |
+| Iterations / Sec (at 100 MHz) | 292 |
+| CoreMark / MHz | **2.92** |
+
+### Dhrystone v2.1
+
+| Metric | Simulation / FPGA |
+| :--- | :--- |
+| Cycles / iteration | 330 |
+| Dhrystones / sec (at 100 MHz) | 302,973 |
+| DMIPS (at 100 MHz) | 172.43 |
+| DMIPS / MHz | **1.72** |
+
+---
+
+## Running Benchmarks
+
+> If you are on a fresh clone, you must build the Verilator simulator first by running `./build.sh` from the repository root.
+
+### CoreMark
+
+To compile and run CoreMark in Verilator simulation:
+
+```bash
+cd coremark && ./run_coremark.sh
+```
+
+To run on physical hardware (Arty A7-100T FPGA @ 25 MHz):
+```bash
+cd coremark && ./run_coremark_arty_a7.sh
+```
+
+### Dhrystone 2.1
+
+To compile and run the industry-standard 2,000,000-iteration Dhrystone benchmark in simulation:
+
+```bash
+cd dhrystone && ./run_dhrystone.sh
+```
+
+To synthesize, program, and monitor on the Arty A7-100T board (@ 25 MHz):
+```bash
+cd dhrystone && ./run_dhrystone_arty_a7.sh
+```
+
+---
 
 ## Configurations
 
